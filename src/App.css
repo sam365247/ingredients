@@ -1,0 +1,174 @@
+.App {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.connection-status {
+  padding: 8px;
+  margin: 20px 0;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.connection-status.connected {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.connection-status.disconnected {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.ingredient-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.ingredient-form input,
+.ingredient-form select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.ingredient-form button {
+  padding: 8px 16px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.ingredient-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.ingredients-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.ingredients-table th,
+.ingredients-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.ingredients-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.ingredients-table button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #1976d2;
+  color: white;
+}
+
+.ingredients-table button.delete-btn {
+  background-color: #d32f2f;
+}
+
+.ingredients-table button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.ingredients-table input,
+.ingredients-table select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 14px;
+  border-radius: 4px;
+  margin: 4px;
+}
+
+.ingredients-table input:hover,
+.ingredients-table select:hover {
+  border-color: #ddd;
+}
+
+.ingredients-table input:focus,
+.ingredients-table select:focus {
+  border-color: #1976d2;
+  outline: none;
+  background-color: #fff;
+}
+
+.ingredients-table input:disabled,
+.ingredients-table select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* Update table cell padding for inputs */
+.ingredients-table td {
+  padding: 8px;
+}
+
+.ingredients-table .row-number {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
