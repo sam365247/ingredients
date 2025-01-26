@@ -1,18 +1,17 @@
+import React from 'react';
 import { useCollaboration } from '../../context/CollaborationContext';
 import { DeleteButton } from '../common/DeleteButton';
 import { StepIngredients } from './StepIngredients';
-import { useIngredientTracking } from '../../hooks/useIngredientTracking';
 
 export const RecipeStepsList = () => {
-  const { recipeSteps, ingredients, isConnected, recipeArrayRef } = useCollaboration();
-  const { wouldExceedMaximum } = useIngredientTracking(ingredients, recipeSteps);
+  const { recipeSteps, isConnected, recipeArrayRef } = useCollaboration();
 
-  const handleUpdateStep = (index, content) => {
+  const handleUpdateStep = (index, field, value) => {
     if (!recipeArrayRef.current) return;
-    const updatedStep = { 
-      ...recipeSteps[index], 
-      content 
-    };
+    
+    const step = recipeSteps[index];
+    const updatedStep = { ...step, [field]: value };
+    
     recipeArrayRef.current.delete(index, 1);
     recipeArrayRef.current.insert(index, [updatedStep]);
   };
@@ -21,13 +20,6 @@ export const RecipeStepsList = () => {
     if (!recipeArrayRef.current) return;
     
     const step = recipeSteps[stepIndex];
-    const ingredient = step.ingredients[ingredientIndex];
-    
-    if (wouldExceedMaximum(ingredient.id, newQuantity, ingredient.quantity)) {
-      alert(`Cannot update quantity: would exceed available amount of ${ingredient.name}`);
-      return;
-    }
-
     const updatedIngredients = [...step.ingredients];
     updatedIngredients[ingredientIndex] = {
       ...updatedIngredients[ingredientIndex],
@@ -64,49 +56,63 @@ export const RecipeStepsList = () => {
   };
 
   return (
-    <table className="recipe-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Step</th>
-          <th>Ingredients Used</th>
-        </tr>
-      </thead>
-      <tbody>
-        {recipeSteps.map((step, index) => (
-          <tr key={step.id}>
-            <td className="row-number">{index + 1}</td>
-            <td className="step-cell">
-              <textarea
-                value={step.content}
-                onChange={(e) => handleUpdateStep(index, e.target.value)}
-                disabled={!isConnected}
-                className="recipe-step"
-              />
-              <DeleteButton onClick={() => handleDeleteStep(index)} disabled={!isConnected} />
-            </td>
-            <td className="step-ingredients-cell">
-              <StepIngredients 
-                ingredients={step.ingredients || []}
-                stepIndex={index}
-                onUpdateIngredient={(ingredientIndex, newQuantity) => 
-                  handleUpdateStepIngredient(index, ingredientIndex, newQuantity)
-                }
-                onDeleteIngredient={(ingredientIndex) => 
-                  handleDeleteStepIngredient(index, ingredientIndex)
-                }
-              />
-            </td>
-          </tr>
-        ))}
-        {recipeSteps.length === 0 && (
+    <div className="recipe-steps-list">
+      <h2>Recipe Steps</h2>
+      <table className="recipe-steps-table">
+        <thead>
           <tr>
-            <td colSpan="3" className="empty-message">
-              No recipe steps added yet
-            </td>
+            <th>Step</th>
+            <th>Instructions</th>
+            <th>Ingredients</th>
+            <th></th>
           </tr>
-        )}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {recipeSteps.map((step, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>
+                <textarea
+                  value={step.content}
+                  onChange={(e) => handleUpdateStep(index, 'content', e.target.value)}
+                  disabled={!isConnected}
+                  className="step-input"
+                  rows={2}
+                />
+              </td>
+              <td>
+                <StepIngredients
+                  ingredients={step.ingredients}
+                  stepIndex={index}
+                  onUpdateIngredient={(ingredientIndex, newQuantity) => 
+                    handleUpdateStepIngredient(index, ingredientIndex, newQuantity)
+                  }
+                  onDeleteIngredient={(ingredientIndex) => 
+                    handleDeleteStepIngredient(index, ingredientIndex)
+                  }
+                />
+              </td>
+              <td className="delete-step-column">
+                <button 
+                  className="delete-step-button"
+                  onClick={() => handleDeleteStep(index)}
+                  disabled={!isConnected}
+                  title="Delete Step"
+                >
+                  ×
+                </button>
+              </td>
+            </tr>
+          ))}
+          {recipeSteps.length === 0 && (
+            <tr>
+              <td colSpan="4" className="empty-message">
+                No recipe steps added yet
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }; 

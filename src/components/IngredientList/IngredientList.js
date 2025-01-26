@@ -63,11 +63,11 @@ export const IngredientList = () => {
     <div className="ingredient-list">
       <h1>Collaborative Ingredient List</h1>
       <AddIngredientForm />
-      <table className="ingredients-table">
+      <table className="ingredient-table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Ingredient</th>
+            <th>Number</th>
+            <th>Name</th>
             <th>Quantity</th>
             <th>Unit</th>
           </tr>

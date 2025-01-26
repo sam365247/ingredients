@@ -55,7 +55,7 @@ export const IngredientDropdown = ({ onSelect, onClose, usedIngredients = [] }) 
   };
 
   return (
-    <div className="ingredient-list" ref={dropdownRef}>
+    <div className="ingredient-dropdown-list" ref={dropdownRef}>
       {ingredients.map((ingredient) => {
         const available = Number(availableQuantities[ingredient.id]) || 0;
         if (available <= 0) return null;
@@ -65,10 +65,13 @@ export const IngredientDropdown = ({ onSelect, onClose, usedIngredients = [] }) 
         const step = getStepValue(ingredient.unit);
 
         return (
-          <div key={ingredient.id} className="ingredient-item">
-            <span className="ingredient-name">
-              {ingredient.name} ({ingredient.unit}) - Available: {available.toFixed(1)}
-            </span>
+          <div key={ingredient.id} className="ingredient-dropdown-item">
+            <div>
+              <div className="ingredient-name">{ingredient.name}</div>
+              <div className="ingredient-availability">
+                Available: {available.toFixed(1)} {ingredient.unit}
+              </div>
+            </div>
             <div className="ingredient-controls">
               <input
                 type="number"
